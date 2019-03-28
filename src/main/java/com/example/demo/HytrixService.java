@@ -34,7 +34,7 @@ public class HytrixService implements InitializingBean {
     )
     public void call() {
         count++;
-        if(count %3 == 0) {
+        if(0 == 0) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
