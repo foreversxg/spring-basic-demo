@@ -1,4 +1,4 @@
-package com.example.structure.skip;
+package com.example.basic.structure.skip;
 
 import java.util.Random;
 
