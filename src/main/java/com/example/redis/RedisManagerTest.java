@@ -1,5 +1,10 @@
 package com.example.redis;
 
+import redis.clients.jedis.ScanParams;
+
+import java.util.List;
+import java.util.Set;
+
 /**
  * @Author: shaoxiangen
  * @Date: Create in 2019/3/29
@@ -10,9 +15,12 @@ public class RedisManagerTest {
 
     public static void main(String[] args) throws Exception {
         init();
+        redisManager.getJedis().flushAll();
 //        test_setex();
 //        test_incr();
-        test_setex();
+//        test_scan();
+
+        test_sadd();
         redisManager.close();
     }
 
@@ -20,6 +28,42 @@ public class RedisManagerTest {
         redisManager = new RedisManager();
         redisManager.afterPropertiesSet();
     }
+
+    private static void test_sadd() {
+
+        redisManager.sadd("test_sadd_1","5","3","1","2","4","3");
+        Set<String> set = redisManager.sMember("test_sadd_1");
+        set.forEach(System.out::println);
+
+
+    }
+
+    private static void test_scan() {
+        redisManager.setex("test_keys_1","10",10);
+        redisManager.setex("test_keys_2","20",10);
+        redisManager.setex("test_keys_3","30",10);
+        redisManager.setex("test_keys_4","40",10);
+        redisManager.setex("test_keys_5","10",10);
+        redisManager.setex("test_keys_6","20",10);
+        redisManager.setex("test_keys_7","30",10);
+        redisManager.setex("test_keys_8","40",10);
+        // hash结构  entry + list
+        List<String> list = redisManager.scan("0",new ScanParams().count(5));
+        list.forEach(System.out::println);
+        System.out.println();
+        list = redisManager.scan("1",new ScanParams().count(2));
+        list.forEach(System.out::println);
+    }
+
+    private static void test_keys() {
+        redisManager.setex("test_keys_1","10",10);
+        redisManager.setex("test_keys_2","20",10);
+        redisManager.setex("test_keys_3","30",10);
+        redisManager.setex("test_keys_4","40",10);
+        Set<String> set = redisManager.keys("*");
+        set.forEach(System.out::println);
+    }
+
     private static void test_incr() {
         redisManager.set("test_incr_1","10");
         System.out.println(redisManager.incr("test_incr_1"));
