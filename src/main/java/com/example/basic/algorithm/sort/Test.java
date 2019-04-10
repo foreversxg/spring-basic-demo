@@ -3,11 +3,10 @@ package com.example.basic.algorithm.sort;
 import java.util.Random;
 
 /**
- * 时间复杂度：最优->O(NlogN). 最差 ->O(n^2)
  * @Author: shaoxiangen
- * @Date: Create in 2019/4/3
+ * @Date: Create in 2019/4/8
  */
-public class QuickSort {
+public class Test {
 
     public static void main(String[] args) {
         int size = 50;
@@ -16,6 +15,7 @@ public class QuickSort {
         for(int i=0;i<size;i++) {
             a[i] = random.nextInt(size);
         }
+//        int[] a = {2,5,3,8,6};
         long start = System.currentTimeMillis();
         sort(a,0,a.length-1);
         System.out.println("cost time:" + (System.currentTimeMillis() - start));
@@ -24,32 +24,29 @@ public class QuickSort {
         }
     }
 
-    private static void sort(int[] a,int low,int high) {
-        // 递归终止条件
+    public static void sort(int[] a,int low,int high){
         if(low >= high) {
             return;
         }
-        int index = sortDetail(a,low,high);
+        int index = test(a,low,high);
         sort(a,low,index-1);
-        sort(a,index + 1,high);
+        sort(a,index+1,high);
     }
 
-    private static int sortDetail(int[] a,int low,int high) {
+    public static int test(int[] a,int low,int high){
         int key = a[low];
-        while (high > low) {
-            // >=  是因为存在相同的值，如果相同需要继续向后
-            while(a[high] >= key && high > low) {
+        while (low < high) {
+            while (a[high] >= key && low < high) {
                 high --;
             }
             a[low] = a[high];
-            // <=  是因为存在相同的值，如果相同需要继续向前
-            while (a[low] <= key && high > low) {
+            // >=  是因为存在相同的值，如果相同需要继续向前
+            while (a[low] <= key && low < high) {
                 low ++;
             }
             a[high] = a[low];
         }
-        // 此时 low == high
         a[low] = key;
-        return high;
+        return low;
     }
 }
