@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author xiehui
  * @date Created in 2018/8/6
  */
 public final class JDKClassLoader extends URLClassLoader {

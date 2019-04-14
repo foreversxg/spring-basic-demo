@@ -4,7 +4,11 @@ import org.springframework.beans.factory.InitializingBean;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.params.SetParams;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: shaoxiangen
@@ -15,11 +19,12 @@ public class RedisManager implements InitializingBean {
     private JedisPool jedisPool;
     private String host="127.0.0.1";
     private int port=6379;
+    private static ThreadLocal<Jedis> threadLocal = new ThreadLocal<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(5);
+        config.setMaxIdle(30);
         config.setTestOnBorrow(false);
         this.jedisPool = new JedisPool(config, this.host, this.port);
     }
@@ -53,6 +58,32 @@ public class RedisManager implements InitializingBean {
     }
 
     /**
+     * 线上禁用
+     * @param pattern
+     * @return
+     */
+    @Deprecated
+    public Set<String> keys(String pattern) {
+        return getJedis().keys(pattern);
+    }
+
+    public List<String> scan(String cursor){
+        return getJedis().scan(cursor).getResult();
+    }
+
+    public long sadd(String key,String... values) {
+        return getJedis().sadd(key,values);
+    }
+
+    public Set<String> sMember(String key) {
+        return getJedis().smembers(key);
+    }
+
+    public List<String> scan(String cursor, final ScanParams params){
+        return getJedis().scan(cursor,params).getResult();
+    }
+
+    /**
      *
      * @param key
      * @return 剩余过期时间
@@ -61,9 +92,14 @@ public class RedisManager implements InitializingBean {
         return getJedis().ttl(key);
     }
 
-    private Jedis getJedis() {
+    public Jedis getJedis() {
+        Jedis jedis = threadLocal.get();
+        if(jedis != null) {
+            return jedis;
+        }
         try {
-            Jedis jedis = this.jedisPool.getResource();
+            jedis = this.jedisPool.getResource();
+            threadLocal.set(jedis);
             return jedis;
         } catch (Exception e) {
             throw new RuntimeException();
