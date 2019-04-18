@@ -23,27 +23,28 @@ public class HytrixService implements InitializingBean {
             groupKey = "timeline-group-rcmd",
             fallbackMethod = "callback",
             commandProperties = {
-                    @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE"), // 信号量隔离，因为业务方法用了ThreadLocal
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"), // 信号量隔离，因为业务方法用了ThreadLocal
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100"), //超时时间
-                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value="50"),//触发熔断最小请求数量
-                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value="30"),//触发熔断的错误占比阈值
-                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value="3000"),//熔断器回复时间
-                    @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value="300"),// 单机最高并发
-                    @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value="100")// fallback单机最高并发
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "50"),//触发熔断最小请求数量
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "30"),//触发熔断的错误占比阈值
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3000"),//熔断器回复时间
+                    @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value = "300"),// 单机最高并发
+                    @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value = "100")// fallback单机最高并发
             }
     )
-    public void call() {
+    public String call() {
         count++;
-        if(0 == 0) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
         }
+        System.out.println("main work:" + System.currentTimeMillis());
+        return "main";
+
     }
 
-    public void callback() {
-        System.out.println("callback");
+    public String callback() {
+        System.out.println("callback：" + System.currentTimeMillis());
+        return "callback";
     }
 }
