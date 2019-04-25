@@ -1,4 +1,4 @@
-package com.example.basic.design.proxy;
+package com.example.basic.design.proxy.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,9 +17,9 @@ public class MiddlePerson implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("中介处理购房前手续");
-        Object result = method.invoke(args);
-        System.out.println("中介处理购房后手续");
+//        System.out.println("中介处理购房前手续");
+        Object result = method.invoke(houseBuyer,args);
+//        System.out.println("中介处理购房后手续");
         return result;
     }
 }

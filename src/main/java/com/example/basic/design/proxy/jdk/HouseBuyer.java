@@ -1,4 +1,4 @@
-package com.example.basic.design.proxy;
+package com.example.basic.design.proxy.jdk;
 
 /**
  * @Author: shaoxiangen
@@ -6,5 +6,5 @@ package com.example.basic.design.proxy;
  */
 public interface HouseBuyer {
 
-    void pay();
+    void pay(int num);
 }
