@@ -5,6 +5,9 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * @Author: shaoxiangen
  * @Date: Create in 2018/12/21
@@ -34,16 +37,17 @@ public class HytrixService implements InitializingBean {
     )
     public void call() {
         count++;
-        if(0 == 0) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
+                System.out.println("still alive");
             } catch (InterruptedException e) {
 
             }
-        }
     }
 
     public void callback() {
         System.out.println("callback");
+//        Arrays.asList(1).stream().findAny()
+
     }
 }
