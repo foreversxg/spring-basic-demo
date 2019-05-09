@@ -24,6 +24,7 @@ public class ZkTest {
         zkService.delete(path);
         zkService.add(path,"123");
         PathChildrenCache pathChildrenCache = new PathChildrenCache(zkService.getClient(), path, true);
+        pathChildrenCache.start(PathChildrenCache.StartMode.BUILD_INITIAL_CACHE);
         pathChildrenCache.getListenable().addListener(new PathChildrenCacheListener() {
             @Override
             public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
