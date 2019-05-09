@@ -1,4 +1,4 @@
-package com.example.redis;
+package com.example.cache.redis;
 
 import org.springframework.beans.factory.InitializingBean;
 import redis.clients.jedis.Jedis;

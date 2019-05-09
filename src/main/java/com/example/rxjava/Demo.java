@@ -1,10 +1,12 @@
 package com.example.rxjava;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.functions.Func0;
 
 /**
  * @Author: shaoxiangen
@@ -12,49 +14,36 @@ import io.reactivex.disposables.Disposable;
  */
 public class Demo {
 
+    private static final Logger logger = LoggerFactory.getLogger(Demo.class);
+
     public static void main(String[] args) {
-        Observable observable =Observable.create(new ObservableOnSubscribe<Integer>() {
+        //定义一个被观察者
+        Observable<String> observable = Observable.defer(new Func0<Observable<String>>() {
             @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                emitter.onNext(1);
-                emitter.onNext(2);
-                emitter.onNext(3);
-                emitter.onComplete();
+            public Observable<String> call() {
+
+                Observable<String> mObservable = Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        subscriber.onNext("事件订阅开始");
+                    }
+                });
+                return mObservable;
             }
         });
-        observable.subscribe(new Observer1("jim"));
-
-        observable.subscribe(new Observer1("tom"));
-    }
-
-
-
-    public static class Observer1 implements Observer<Integer>{
-
-        private String name;
-
-        public Observer1(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public void onSubscribe(Disposable d) {
-            System.out.println(name + ":subscribe");
-        }
-
-        @Override
-        public void onNext(Integer value) {
-            System.out.println(name + ":"+value);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            System.out.println(name + ":"+"error");
-        }
-
-        @Override
-        public void onComplete() {
-            System.out.println(name + ":"+"complete");
-        }
+        //订阅事件1，没产生一个订阅就会生成一个新的observable对象
+        observable.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                logger.info("观察者2订阅事件    "+s);
+            }
+        });
+        //订阅事件2，没产生一个订阅就会生成一个新的observable对象
+        observable.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                logger.info("观察者1订阅事件    "+s);
+            }
+        });
     }
 }

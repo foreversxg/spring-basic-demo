@@ -1,5 +1,7 @@
 package com.example;
 
+import org.apache.commons.collections.map.HashedMap;
+
 import java.util.*;
 
 /**
@@ -9,15 +11,18 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.forEach(System.out::print);
-        System.out.println();
-        list.add(5,9);
-        list.forEach(System.out::print);
+        Map<String,String> map = new Hashtable<>();
+        map.put("1",null);
+        System.out.println(map.get(null));
+//        List<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        list.add(2);
+//        list.add(3);
+//        list.add(4);
+//        list.forEach(System.out::print);
+//        System.out.println();
+//        list.add(5,9);
+//        list.forEach(System.out::print);
     }
 
     private static Long getVideoId(String url) {

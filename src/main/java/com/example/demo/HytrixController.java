@@ -15,8 +15,17 @@ public class HytrixController {
     @Resource
     private HytrixService hytrixService;
 
+    @Resource
+    private HystrixThreadService hystrixThreadService;
+
     @RequestMapping(value = "/test/call")
     public void call() {
-        hytrixService.call();
+        System.out.println( "controller receve:" + hytrixService.call() + ":" + System.currentTimeMillis());
+    }
+
+
+    @RequestMapping(value = "/test/call2")
+    public void call2() {
+        System.out.println( "controller receve:" + hystrixThreadService.call() + ":" + System.currentTimeMillis());
     }
 }

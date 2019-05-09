@@ -1,5 +1,7 @@
 package com.example.basic.structure;
 
+import com.example.basic.algorithm.TreeNode;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -10,7 +12,7 @@ import java.util.Queue;
 public class BinaryTree {
 
     //表示根节点
-    public Node root;
+    public TreeNode root;
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
@@ -27,12 +29,12 @@ public class BinaryTree {
         print(tree.root);
     }
 
-    private static void print(Node root) {
+    private static void print(TreeNode root) {
 
-        Queue<Node> queue = new ArrayDeque();
+        Queue<TreeNode> queue = new ArrayDeque();
         queue.offer(root);
         while (!queue.isEmpty()) {
-            Node current = queue.poll();
+            TreeNode current = queue.poll();
             System.out.println(current.data);
             if(current.leftChild != null) {
                 queue.offer(current.leftChild);
@@ -46,14 +48,14 @@ public class BinaryTree {
 
 
     public boolean add(int data) {
-        Node newNode = new Node(data);
+        TreeNode newNode = new TreeNode(data);
         if (root == null) {
             root = newNode;
             return true;
         }
-        Node current = root;
+        TreeNode current = root;
         while (current != null) {
-            Node temp;
+            TreeNode temp;
             if (current.data > data) {
                 temp = current.leftChild;
                 if(temp == null) {
@@ -72,18 +74,5 @@ public class BinaryTree {
             current = temp;
         }
         return false;
-    }
-
-
-    public static class Node {
-
-        int data;   //节点数据
-        Node leftChild; //左子节点的引用
-        Node rightChild; //右子节点的引用
-        boolean isDelete;//表示节点是否被删除
-
-        public Node(int data) {
-            this.data = data;
-        }
     }
 }
