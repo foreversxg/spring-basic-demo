@@ -20,7 +20,7 @@ public class ListenableFutrueTest {
             @Override
             public String call() throws Exception {
                 Thread.sleep(1000*5);
-                int i = 5/0;
+//                int i = 5/0;
                 return "Hello";
             }
         });

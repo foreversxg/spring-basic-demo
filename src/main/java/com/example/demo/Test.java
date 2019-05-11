@@ -11,14 +11,8 @@ import java.util.Objects;
 public class Test {
 
     public static void main(String[] args) {
-        int n =7;
-        if(n%1==0 || n%n==0) {
-            if(n%2==0 || n%3 == 0) {
-                System.out.println("not");
-            } else {
-                System.out.println("yes");
-            }
-        }
+       int i  = 0XFF;
+        System.out.println(Integer.toHexString(i));
     }
     public static class RocketMQListenerImpl implements RocketMQListener<String> {
 
