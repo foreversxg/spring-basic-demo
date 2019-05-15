@@ -54,7 +54,7 @@ public class Test {
         }
         while (bLen >= 0) {
             int sum = temp + list.get(toInt(b[bLen]));
-            
+
             if (sum >= 10) {
                 temp = 1;
                 sb.append(list.get(sum % 10));
