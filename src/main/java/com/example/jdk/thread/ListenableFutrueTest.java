@@ -13,7 +13,7 @@ public class ListenableFutrueTest {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         ExecutorService service = Executors.newSingleThreadExecutor();
         Future<String> future =service.submit(new Callable<String>() {
@@ -24,6 +24,7 @@ public class ListenableFutrueTest {
                 return "Hello";
             }
         });
+//        String result = future.get();
         SettableListenableFuture listenableFuture = new SettableListenableFuture();
         listenableFuture.addCallback(new ListenableFutureCallback(){
 
