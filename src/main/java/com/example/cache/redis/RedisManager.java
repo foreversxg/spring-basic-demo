@@ -79,6 +79,10 @@ public class RedisManager implements InitializingBean {
         return getJedis().smembers(key);
     }
 
+    public boolean ismember(String key,String value) {
+        return getJedis().sismember(key,value);
+    }
+
     public List<String> scan(String cursor, final ScanParams params){
         return getJedis().scan(cursor,params).getResult();
     }
@@ -112,4 +116,10 @@ public class RedisManager implements InitializingBean {
     public void delete(String key) {
         getJedis().del(key);
     }
+
+    public List<String> mulGet(String... keys) {
+        return getJedis().mget(keys);
+    }
+
+
 }

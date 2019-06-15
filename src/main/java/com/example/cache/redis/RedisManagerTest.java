@@ -1,8 +1,13 @@
 package com.example.cache.redis;
 
+import org.apache.commons.collections.CollectionUtils;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ScanParams;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,8 +25,10 @@ public class RedisManagerTest {
 //        test_incr();
 //        test_scan();
 
-        test_sadd();
+//        mul_get();
+        pipeline_test();
         redisManager.close();
+
     }
 
     private static void init() throws Exception {
@@ -29,11 +36,62 @@ public class RedisManagerTest {
         redisManager.afterPropertiesSet();
     }
 
+    /**
+     * redis pipeline 的测试
+     */
+    private static void pipeline_test(){
+        Jedis redis = redisManager.getJedis();
+        Map<String, String> data = new HashMap<String, String>();
+        redis.select(8);
+        redis.flushDB();
+        // hmset
+        long start = System.currentTimeMillis();
+        // 直接hmset
+        for (int i = 0; i < 10000; i++) {
+            data.clear();
+            data.put("k_" + i, "v_" + i);
+            redis.hmset("key_" + i, data);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("dbsize:[" + redis.dbSize() + "] .. ");
+        System.out.println("hmset without pipeline used [" + (end-start) + "] miliseconds ..");
+        redis.select(8);
+        redis.flushDB();
+        // 使用pipeline hmset
+        Pipeline p = redis.pipelined();
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+            data.clear();
+            data.put("k_" + i, "v_" + i);
+            p.hmset("key_" + i, data);
+        }
+        p.sync();
+        end = System.currentTimeMillis();
+        System.out.println("dbsize:[" + redis.dbSize() + "] .. ");
+        System.out.println("hmset with pipeline used [" + (end-start) + "] miliseconds ..");
+    }
+
+    private static void mul_get() {
+        redisManager.setex("test_keys_1","10",10);
+        redisManager.setex("test_keys_2","20",10);
+        List<String> result = redisManager.mulGet("test_keys_1","test_keys_2");
+        if(CollectionUtils.isNotEmpty(result)) {
+            result.forEach(System.out::println);
+        }
+    }
+
+    /**
+     * 测试set数据结构
+     */
     private static void test_sadd() {
 
         redisManager.sadd("test_sadd_1","5","3","1","2","4","3");
+        // 获取所有set数据
         Set<String> set = redisManager.sMember("test_sadd_1");
         set.forEach(System.out::println);
+        // 判断 5 是否在 test_sadd_1 对应的set里
+        System.out.println(redisManager.ismember("test_sadd_1","5"));
+        System.out.println(redisManager.ismember("test_sadd_1","9"));
 
 
     }
