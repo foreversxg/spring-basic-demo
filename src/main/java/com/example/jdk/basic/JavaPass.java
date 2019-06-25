@@ -9,7 +9,7 @@ import java.util.List;
 public class JavaPass {
 
     public static void main(String[] args) {
-        new JavaPass().test_Object_type_pass_2();
+        new JavaPass().test_Object_type_pass_3();
     }
 
     public void test_basic_type_pass() {
@@ -35,8 +35,20 @@ public class JavaPass {
 
     }
 
-    private void changeObject2(Person person) {
+    public void test_Object_type_pass_3() {
+        Person person = new Person();
+        person.name = "tom";
+        changeObject3(person);
+        System.out.println("test_Object_type_pass_2：" + person.name);
+
+    }
+    private void changeObject3(Person person) {
         person = new Person();
+        person.name = "jim";
+        System.out.println("changeObject：" + person.name);
+    }
+
+    private void changeObject2(Person person) {
         person.name = "jim";
         System.out.println("changeObject：" + person.name);
     }

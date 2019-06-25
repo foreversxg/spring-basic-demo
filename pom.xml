@@ -186,6 +186,11 @@
             <artifactId>spring-aop</artifactId>
             <version>4.3.11.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.netease.cloudmusic</groupId>
+            <artifactId>music-hystrix-plugins</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
