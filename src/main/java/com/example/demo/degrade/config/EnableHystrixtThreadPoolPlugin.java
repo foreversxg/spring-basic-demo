@@ -1,6 +1,6 @@
 package com.example.demo.degrade.config;
 
-import com.netease.cloudmusic.hystrix.plugins.core.HystrixThreadPoolPluginRegister;
+import com.example.demo.degrade.core.HystrixThreadPoolPluginRegister;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

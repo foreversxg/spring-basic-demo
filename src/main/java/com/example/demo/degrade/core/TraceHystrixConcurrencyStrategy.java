@@ -1,9 +1,5 @@
 package com.example.demo.degrade.core;
 
-import com.netease.cloudmusic.hystrix.plugins.core.TraceThreadPoolExecutor;
-import com.netease.cloudmusic.hystrix.plugins.monitor.HystrixThreadPoolStatusCollector;
-import com.netease.music.batchrpc.sentry.TaskStatus;
-import com.netease.music.batchrpc.util.MusicTimer;
 import com.netflix.hystrix.HystrixThreadPoolKey;
 import com.netflix.hystrix.HystrixThreadPoolProperties;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
@@ -25,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TraceHystrixConcurrencyStrategy extends HystrixConcurrencyStrategy {
 
-    private final static Logger logger = LoggerFactory.getLogger(com.netease.cloudmusic.hystrix.plugins.core.TraceHystrixConcurrencyStrategy.class);
+    private final static Logger logger = LoggerFactory.getLogger(TraceHystrixConcurrencyStrategy.class);
 
     @Override
     public ThreadPoolExecutor getThreadPool(final HystrixThreadPoolKey threadPoolKey, HystrixProperty<Integer> corePoolSize, HystrixProperty<Integer> maximumPoolSize, HystrixProperty<Integer> keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {

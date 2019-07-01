@@ -1,8 +1,5 @@
 package com.example.demo.degrade.core;
 
-import com.netease.cloudmusic.trace.client.TraceInfo;
-import com.netease.cloudmusic.trace.client.Tracer;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -21,9 +18,7 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     public void execute(Runnable command) {
-        TraceInfo traceInfo =Tracer.getCurrentTraceInfo();
         super.execute(() -> {
-            Tracer.setCurrentTraceInfo(traceInfo);
             command.run();
         });
     }
