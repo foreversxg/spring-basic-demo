@@ -26,7 +26,7 @@ public class EnvironmentAwareTest implements EnvironmentAware,ApplicationContext
         this.environment.getProperty("server.port");
         Map<String,Object> map = this.environment.getSystemProperties();
         MutablePropertySources mutablePropertySources= this.environment.getPropertySources();
-        System.out.println(map);
+//        System.out.println(map);
     }
 
     @Override

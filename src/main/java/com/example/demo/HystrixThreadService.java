@@ -58,14 +58,15 @@ public class HystrixThreadService {
             }
     )
     public String call2(){
-        try {
-            System.out.println("线程池：" + ThreadLocalTest.get());
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            System.out.println("InterruptedException");
-        }
-        System.out.println("main work:" + System.currentTimeMillis());
-        return "main";
+        throw new NullPointerException("1");
+//        try {
+//            System.out.println("线程池：" + ThreadLocalTest.get());
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            System.out.println("InterruptedException");
+//        }
+//        System.out.println("main work:" + System.currentTimeMillis());
+//        return "main";
     }
 
     public String fallback() {
