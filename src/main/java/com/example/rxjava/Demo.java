@@ -5,8 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @Author: shaoxiangen
@@ -30,7 +34,20 @@ public class Demo {
                 });
                 return mObservable;
             }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                System.out.println("success");
+            }
         });
+        Future future =  observable.toBlocking().toFuture();
+        try {
+            future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         //订阅事件1，没产生一个订阅就会生成一个新的observable对象
         observable.subscribe(new Action1<String>() {
             @Override

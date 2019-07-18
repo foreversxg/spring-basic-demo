@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.security.ThreadLocalTest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,8 +20,8 @@ public class HytrixController {
 
     @RequestMapping(value = "/test/call")
     public String call() {
-         hytrixService.call();
-        System.out.println( "controller receve:" + System.currentTimeMillis());
+
+        System.out.println( "controller receve:"  +hytrixService.call() + System.currentTimeMillis());
         return "OK";
 
     }
@@ -30,8 +29,7 @@ public class HytrixController {
 
     @RequestMapping(value = "/test/call2")
     public String call2() {
-        ThreadLocalTest.set("test-111");
-//        System.out.println( "controller receve:" + hystrixThreadService.call2() + ":" + System.currentTimeMillis());
-        return hystrixThreadService.call2();
+        System.out.println( "controller receve:"  +hystrixThreadService.call2() + System.currentTimeMillis());
+        return "OK";
     }
 }
