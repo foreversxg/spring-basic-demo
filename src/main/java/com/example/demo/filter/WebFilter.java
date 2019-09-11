@@ -18,7 +18,7 @@ public class WebFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String params = request.getParameter("params");
-        System.out.println(params);
+//        System.out.println(params);
         chain.doFilter(request,response);
     }
 
