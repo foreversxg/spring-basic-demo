@@ -1,6 +1,5 @@
 package com.example.demo.degrade.core;
 
-import com.netease.cloudmusic.hystrix.plugins.core.TraceHystrixConcurrencyStrategy;
 import com.netflix.hystrix.strategy.HystrixPlugins;
 
 /**
