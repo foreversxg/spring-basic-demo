@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.spring.prop.InjectPropTest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,11 +18,14 @@ public class HytrixController {
 
     @Resource
     private HystrixThreadService hystrixThreadService;
+    @Resource
+    private InjectPropTest injectPropTest;
+
 
     @RequestMapping(value = "/test/call")
     public String call() {
 
-        System.out.println( "controller receve:"  +hytrixService.call() + System.currentTimeMillis());
+        injectPropTest.say();
         return "OK";
 
     }

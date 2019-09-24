@@ -38,14 +38,15 @@ public class HytrixService {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             System.out.println("thead interruptedException");
+
         }
-        System.out.println("main run end:" + System.currentTimeMillis());
+        System.out.println("main run end:" + System.currentTimeMillis()+"threadName:" + Thread.currentThread().getName());
         return "main return";
 
     }
 
     public String failback() {
-        System.out.println("failback run：" + System.currentTimeMillis());
+        System.out.println("failback run：" + System.currentTimeMillis()+"threadName:" + Thread.currentThread().getName());
         return "failback return";
     }
 

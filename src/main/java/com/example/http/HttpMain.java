@@ -66,7 +66,7 @@ public class HttpMain {
     public static boolean isActive(String videoIdStr) {
 //        CloseableHttpClient httpclient=HttpClients.createDefault();
         String[] array = videoIdStr.split("\t");
-        HttpGet httpget=new HttpGet("http://music.163.com/api/cloudvideo/v1/video/detail?id=" + array[1]);
+        HttpGet httpget=new HttpGet("http://" + array[1]);
         try {
             CloseableHttpResponse response=httpclient.execute(httpget);
             String str = "";
