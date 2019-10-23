@@ -22,59 +22,21 @@ public class HttpMain {
 
     public static void main(String[] args) {
 
-        BufferedReader br = null;
-        InputStream is = null;
-        BufferedWriter bw = null;
-        int count = 1;
-        try {
-            is = HttpMain.class.getResourceAsStream("/video.txt");
-            br = new BufferedReader(new InputStreamReader(is));
-            bw = new BufferedWriter(new FileWriter(new File("D:/ActiveVideo.txt")));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                if(isActive(line)){
-                    bw.write(line + "\n");
-//                    Thread.sleep(500);
-                    System.out.println(count++);
-//                    if(count > 5) {
-//                        break;
-//                    }
-                } else {
-                    System.out.println("404 url+++++++++++++++++++");
-                }
-            }
-            bw.flush();;
-            bw.close();
-        } catch (Exception e) {
-        } finally {
-            try {
-                if(is != null) {
-                    is.close();
-                }
-            } catch (IOException e) {
-            }
-            try {
-                if(br != null) {
-                    br.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-
+        isActive();
     }
 
-    public static boolean isActive(String videoIdStr) {
+    public static boolean isActive() {
 //        CloseableHttpClient httpclient=HttpClients.createDefault();
-        String[] array = videoIdStr.split("\t");
-        HttpGet httpget=new HttpGet("http://music.163.com/api/cloudvideo/v1/video/detail?id=" + array[1]);
+        HttpGet httpget=new HttpGet("https://music.163.com/#/program?id=2058639309");
         try {
             CloseableHttpResponse response=httpclient.execute(httpget);
             String str = "";
             try {
                 str = EntityUtils.toString(response.getEntity());
-                Body body = JSONObject.parseObject(str,Body.class);
-                return body.getCode() == 200;
+                System.out.println(str);
+                return true;
             } catch (Exception e) {
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
