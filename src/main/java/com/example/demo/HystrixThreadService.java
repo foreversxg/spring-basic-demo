@@ -43,12 +43,13 @@ public class HystrixThreadService {
         } catch (InterruptedException e) {
             System.out.println("InterruptedException");
         }
-        System.out.println("main run end:" + System.currentTimeMillis());
+        System.out.println("main run end:" + System.currentTimeMillis() +"threadName:" + Thread.currentThread().getName());
         return "main return";
     }
 
     public String fallback() {
-        System.out.println("callback run：" + System.currentTimeMillis());
+        System.out.println("failback run：" + System.currentTimeMillis()+"threadName:" + Thread.currentThread().getName());
+
         return "fallback return";
     }
 }

@@ -1,4 +1,4 @@
-package com.example.spring.aware;
+package com.example.demo.spring.aware;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
