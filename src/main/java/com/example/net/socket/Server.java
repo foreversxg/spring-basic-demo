@@ -35,14 +35,17 @@ public class Server {
 
     public void start() {
         try {
-            Socket accept = serverSocket.accept();
-            System.out.println("rev");
-            ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(accept.getOutputStream()));
-            Message message = new Message();
-            message.setCode(200);
-            message.setContent("nihao");
-            outputStream.writeObject(message);
-            outputStream.flush();
+            while (true) {
+                Socket accept = serverSocket.accept();
+                System.out.println("rev");
+                ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(accept.getOutputStream()));
+                Message message = new Message();
+                message.setCode(200);
+                message.setContent("nihao");
+                outputStream.writeObject(message);
+                outputStream.flush();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

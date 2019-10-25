@@ -1,6 +1,5 @@
 package com.example.net.conn;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,12 +13,14 @@ import java.net.Socket;
 public class SocketConnection implements Connection {
 
     private Socket socket;
-    private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+    private final ObjectInputStream inputStream;
+    private final ObjectOutputStream outputStream;
 
     public SocketConnection(Socket socket) throws IOException {
         this.socket = socket;
         outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        inputStream = new ObjectInputStream(socket.getInputStream());
+
     }
 
 
@@ -34,14 +35,14 @@ public class SocketConnection implements Connection {
     }
 
     @Override
-    public void close() {
-
+    public void close() throws IOException {
+        inputStream.close();
+        outputStream.close();
+        socket.close();
     }
 
     @Override
     public String receive() throws IOException, ClassNotFoundException {
-        // 这里会阻塞，直到服务端有数据返回
-        inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         Message message = (Message) inputStream.readObject();
         System.out.println(message);
         return message.getContent();

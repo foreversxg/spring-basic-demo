@@ -10,7 +10,7 @@ public interface Connection {
 
     String send(String message) throws IOException;
 
-    void close();
+    void close() throws IOException;
 
     String receive() throws IOException, ClassNotFoundException;
 }

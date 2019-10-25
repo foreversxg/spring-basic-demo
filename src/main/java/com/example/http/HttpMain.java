@@ -27,7 +27,7 @@ public class HttpMain {
 
     public static boolean isActive() {
 //        CloseableHttpClient httpclient=HttpClients.createDefault();
-        HttpGet httpget=new HttpGet("https://music.163.com/#/program?id=2058639309");
+        HttpGet httpget=new HttpGet("http://qa-book.ks.163.com/api/middle/official/accompany/list?id=12");
         try {
             CloseableHttpResponse response=httpclient.execute(httpget);
             String str = "";
