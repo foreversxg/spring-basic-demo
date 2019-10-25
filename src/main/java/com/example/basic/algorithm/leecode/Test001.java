@@ -1,4 +1,4 @@
-package com.example.basic.algorithm;
+package com.example.basic.algorithm.leecode;
 
 /**
  *
