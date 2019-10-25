@@ -67,6 +67,13 @@ public class HeapSort {
         // 所以，这里面的用意就在于，自上而下，自左向右一点点调整整棵树的部分，直到每一颗小子树都满足大根堆的规律为止
 
         /*
+         abc表示数组的坐标MysqlIdGenerator
+            a
+           /  \
+          b    c
+          a = c/2 --1
+          b = 2a + 1
+          c = 2a + 2
                          0
                      /        \
                    1           2

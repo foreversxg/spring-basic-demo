@@ -1,5 +1,7 @@
 package com.example.demo.degrade.core;
 
+import com.example.demo.security.ThreadLocalTest;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -18,7 +20,9 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
     }
 
     public void execute(Runnable command) {
+        String value = ThreadLocalTest.get();
         super.execute(() -> {
+            ThreadLocalTest.set(value);
             command.run();
         });
     }

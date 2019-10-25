@@ -18,15 +18,15 @@ public class HystrixThreadService {
      * @return
      */
     @HystrixCommand(
+            groupKey = "thread-timeline-main-rcmd",
             fallbackMethod = "fallback" ,
-            groupKey = "thread-control",
             commandProperties = {
                     @HystrixProperty(name="execution.isolation.strategy", value="THREAD"),
-                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"), //超时时间
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"), //超时时间
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value="20"),//触发熔断最小请求数量
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value="50"),//触发熔断的错误占比阈值
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value="5000"),//熔断器回复时间
-                    @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value="300")
+                        @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value="300")
             },
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "123"), //核心线程数，当前版本不支持显示设置最大线程数，最大线程数=核心线程数
