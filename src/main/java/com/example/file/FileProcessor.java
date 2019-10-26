@@ -1,5 +1,10 @@
 package com.example.file;
 
+import com.example.jackson.JsonUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.integration.support.json.JacksonJsonUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +13,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -17,7 +24,7 @@ import java.util.Date;
 public class FileProcessor {
 
     public static void main(String[] args) {
-        File file = new File("E:/music-rep2-gyarados.log.2019-10-24");
+        File file = new File("/Users/shaoxiangen/music-space/github/spring-basic-demo/src/main/resources/test.log");
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -31,7 +38,17 @@ public class FileProcessor {
                     if(body .length() <= 100) {
                         continue;
                     }
-                    System.out.println(arrays[1]);
+                    LogMetaWrapper wrapper = new LogMetaWrapper();
+                    wrapper.setDate(date);
+                    LogMeta logMeta = parseLogMeta(body);
+                    wrapper.setLogMeta(logMeta);
+                    if(CollectionUtils.isEmpty(wrapper.getLogMeta().getParams())) {
+                        continue;
+                    }
+                    String println = JsonUtils.toJson(wrapper);
+                    System.out.println(println);
+
+//                    System.out.println(arrays[1]);
 
                 }
             }
@@ -44,77 +61,37 @@ public class FileProcessor {
         }
     }
 
+    private static LogMeta parseLogMeta(String body) {
+        int index = body.indexOf(",[");
+        String first = body.substring(0,index);
+        LogMeta logMeta = new LogMeta();
+        serFirst(first,logMeta);
+        String second = body.substring(index+1,body.length());
+        setSecond(second,logMeta);
+
+        return logMeta;
+    }
+
+    private static void setSecond(String second, LogMeta logMeta) {
+
+        List<UpdateParams> lists = JsonUtils.parse(second, new TypeReference<List<UpdateParams>>() {
+        });
+        logMeta.setParams(lists.stream().filter(p -> p.getType() == 4).collect(Collectors.toList()));
+    }
+
+    private static void serFirst(String first, LogMeta logMeta) {
+        String[] results = first.split(",");
+        logMeta.setId(Long.valueOf(results[0].trim()));
+        logMeta.setConfirm(Boolean.valueOf(results[1].trim()));
+        if(results.length > 2) {
+            logMeta.setScore(Integer.valueOf(results[2].trim()));
+        } else {
+            logMeta.setScore(60);
+        }
+    }
+
     private static Date parseDate(String time) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.parse(time);
-    }
-
-    public static class LogMeta{
-        private long id;
-        private boolean confirm;
-        private int score;
-
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public boolean isConfirm() {
-            return confirm;
-        }
-
-        public void setConfirm(boolean confirm) {
-            this.confirm = confirm;
-        }
-
-        public int getScore() {
-            return score;
-        }
-
-        public void setScore(int score) {
-            this.score = score;
-        }
-    }
-    // ,"source":0,"id":1467553,"type":4}]
-    public static class UpdateParams{
-        private String value;
-        private int source;
-        private long id;
-        private int type;
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public int getSource() {
-            return source;
-        }
-
-        public void setSource(int source) {
-            this.source = source;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
     }
 }
