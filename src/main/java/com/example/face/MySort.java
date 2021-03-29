@@ -41,9 +41,13 @@ public class MySort {
             for(int i= 0;i<bytes.length;i++) {
                 for(int j = 0; j < 8;j ++) {
                     if(((bytes[i] ) & (1 << j)) != 0) {
-//                        System.out.println((i*8) + j);
+                        System.out.println((i * 8) + j);
                     }
                 }
+            }
+
+            for (int i = 0; i < 10; i++) {
+                System.out.println("我是修改后的代码");
             }
         }
     }

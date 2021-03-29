@@ -14,7 +14,7 @@ public class Calc36 {
 
 
     public static void main(String[] args) {
-        System.out.println(calc("a","b"));
+        System.out.println(calc("a", "b"));
     }
 
     public static String calc(String str1,String str2) {

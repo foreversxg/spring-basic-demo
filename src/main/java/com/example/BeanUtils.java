@@ -1,8 +1,12 @@
 package com.example;
 
-import java.io.File;
-import java.io.FileInputStream;
+
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
+
 import java.io.IOException;
+import java.util.List;
+
 
 /**
  * @Author shaoxiangen
@@ -11,9 +15,8 @@ import java.io.IOException;
 public class BeanUtils {
 
     public static void main(String[] args) throws IOException {
-        FileInputStream fis = new FileInputStream(new File("./src/main/resources"));
-        byte[] data = new byte[fis.available()];
-        fis.read(data);
-
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokens = tokenizer.tokenize("昨日までの私は、もうどこにもいない");
+        tokens.forEach(token -> System.out.println(token.getBaseForm()));
     }
 }

@@ -3,7 +3,6 @@ package com.example.file;
 import com.example.jackson.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.integration.support.json.JacksonJsonUtils;
 
 import java.io.BufferedReader;
 import java.io.File;

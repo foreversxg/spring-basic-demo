@@ -19,6 +19,11 @@ public class Test003 {
 
     public static void main(String[] args) {
         int[] nums = {1,1,2,2,4,6,6};
+        System.out.println(1 ^ 2);
+        System.out.println(1 ^ 2 ^ 2);
+        System.out.println(1 ^ 2 ^ 1);
+        System.out.println(1 ^ 1);
+        System.out.println(2 ^ 2);
         System.out.println(singleNumber(nums));
     }
 

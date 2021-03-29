@@ -1,9 +1,7 @@
 package com.example.jdk.jvm;
 
-import org.apache.commons.collections.map.HashedMap;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Author: shaoxiangen
@@ -12,12 +10,21 @@ import java.util.Map;
 public class OomTest {
 
     public static void main(String[] args) {
-        Map<String,String> map = new HashedMap(1024*10);
-        int n = 0;
-        while (true){
-            n++;
-            map.put(String.valueOf(n),new String(new byte[1024*1023]));
-            System.out.println(n);
+        PigMachine pigMachine = new PigMachine();
+        ExecutorService pool = Executors.newFixedThreadPool(1);
+        while (true) {
+            pool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("pig eat：");
+                    try {
+                        pigMachine.eat();
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        System.out.println("我裂开了！！！");
+                    }
+                }
+            });
         }
     }
 }

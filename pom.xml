@@ -237,6 +237,22 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs</groupId>
+            <artifactId>ark-tweet-nlp</artifactId>
+            <version>0.3.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.atilika.kuromoji/kuromoji-ipadic -->
+        <dependency>
+            <groupId>com.atilika.kuromoji</groupId>
+            <artifactId>kuromoji-ipadic</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.xmemcached</groupId>
+            <artifactId>xmemcached</artifactId>
+            <version>2.4.7</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

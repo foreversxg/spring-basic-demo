@@ -3,6 +3,7 @@ package com.example.basic.algorithm.sort;
 import java.util.Arrays;
 
 /**
+ * 将数组分为左右两个子数组，每一次从右边数组中选取一个最小的数放到左边数组的最后一位，最终完成从小到大的排序
  * @Author: shaoxiangen
  * @Date: Create in 2019/4/4
  */
