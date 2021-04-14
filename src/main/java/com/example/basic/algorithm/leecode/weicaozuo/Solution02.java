@@ -1,4 +1,4 @@
-package com.example.basic.algorithm.leecode.hammingWeight;
+package com.example.basic.algorithm.leecode.weicaozuo;
 
 /**
  * 计算汉明重量
@@ -7,10 +7,10 @@ package com.example.basic.algorithm.leecode.hammingWeight;
  * @author shaoxiangen
  * create in 2021/3/4
  */
-public class Solution {
+public class Solution02 {
 
     public static void main(String[] args) {
-        System.out.println(new Solution().run(3));
+        System.out.println(new Solution02().run(3));
     }
 
     public int run(int num) {

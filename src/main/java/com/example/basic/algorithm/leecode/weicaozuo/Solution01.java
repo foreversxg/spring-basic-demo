@@ -6,10 +6,10 @@ package com.example.basic.algorithm.leecode.weicaozuo;
  * @author shaoxiangen
  * create in 2021/3/4
  */
-public class Solution {
+public class Solution01 {
 
     public static void main(String[] args) {
-        new Solution().run(4, 7);
+        new Solution01().run(4, 7);
     }
 
     public void run(int a, int b) {
